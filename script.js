@@ -210,9 +210,6 @@ const quizarr=[
         }
       ]
     },
-
-
-
 ];
 const  question=document.getElementById("question")
 const butt=document.querySelectorAll(".button")
@@ -220,6 +217,8 @@ const button=document.querySelector(".all")
 const step=document.querySelector(".last")
 const body=document.querySelector("body")
 const special=document.querySelector(".quiz")
+const timebutt=document.querySelector(".time")
+const message=document.querySelector(".message")
  let currentquestionindex=0;
  let score=0;
   startquiz()
@@ -244,15 +243,16 @@ const special=document.querySelector(".quiz")
  button.addEventListener("click",function(e){
   if(e.target.tagName==="BUTTON"){
     if(e.target.dataset.correct==="true"){
-      e.target.style.border="3px solid green"
-      e.target.style.backgroundColor="#9aeabc"
+      e.target.style.border="2px solid green"
+      e.target.style.backgroundColor="#9fddb9ff"
+        score++;
     }
     else{
-      e.target.style.border="3px solid red"
-      e.target.style.backgroundColor="#fda1a1ff"
+      e.target.style.border="2px solid red"
+      e.target.style.backgroundColor="#ecb2b2ff"
       butt.forEach((l)=>{
         if(l.dataset.correct==="true"){
-          l.style.border="3px solid green"
+          l.style.border="2px solid green"
           l.style.backgroundColor="#9aeabc"
         }
       })
@@ -260,7 +260,6 @@ const special=document.querySelector(".quiz")
     butt.forEach((l)=>{
     l.setAttribute("disabled","")
   })
-  if(e.target.dataset.correct==="true")score++;
   }
  })
  step.addEventListener("click",function(e){
@@ -280,5 +279,45 @@ const special=document.querySelector(".quiz")
   question.innerHTML=`Score ${score} out of ${currentquestionindex}`
   button.innerHTML=""
   step.innerHTML="Play Again"
+      clearInterval(t)
+  if(score===quizarr.length){
+    message.innerHTML="Outstanding! 🏆"
+    confetti({
+      particleCount:300,
+      spread:50,
+      angel:60,
+      origin:{x:0,y:1}
+    })
+    confetti({
+      particleCount:300,
+      spread:50,
+      angle:120,
+      origin:{x:1,y:1}
+    })
+  }
+  else if(score>(quizarr.length/2)){
+    message.innerHTML="Good job! 👍"
+  }
+     else{
+     message.innerHTML="Keep Learning! 📚 Practice makes perfect"
+  }
  }
+ })
+ let timeleft=300;
+ const t=setInterval(function(){
+ let minutes=Math.floor(timeleft/60);
+ let second=timeleft%60;
+ timebutt.innerHTML=`${minutes <10 ? '0':""}${minutes}:${second<10?'0':""}${second}`
+ if(timeleft<=0){
+  question.innerHTML=`Score ${score} out of ${quizarr.length}`
+  button.innerHTML=""
+  step.innerHTML="Play Again"
+ }
+ else{
+  timeleft--;
+ }
+ },1000)
+ 
+ }
+
  })
