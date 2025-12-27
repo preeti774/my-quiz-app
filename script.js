@@ -285,7 +285,7 @@ const message=document.querySelector(".message")
     confetti({
       particleCount:300,
       spread:50,
-      angel:60,
+      angle:60,
       origin:{x:0,y:1}
     })
     confetti({
@@ -317,7 +317,4 @@ const message=document.querySelector(".message")
   timeleft--;
  }
  },1000)
- 
- }
 
- })
